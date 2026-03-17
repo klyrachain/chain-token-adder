@@ -1,0 +1,40 @@
+{
+  "name": "balance-tester",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:webpack": "next dev --webpack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@0xsquid/sdk": "2.11.0",
+    "@0xsquid/squid-types": "^0.1.209",
+    "@dynamic-labs/ethereum": "^4.58.0",
+    "@dynamic-labs/sdk-react-core": "^4.58.0",
+    "@dynamic-labs/wallet-book": "^1.0.0",
+    "@reown/appkit": "^1.8.0",
+    "@reown/appkit-adapter-wagmi": "^1.8.0",
+    "@tanstack/react-query": "^5.90.20",
+    "crypto-browserify": "^3.12.0",
+    "next": "16.1.6",
+    "process": "^0.11.10",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "stream-browserify": "^3.0.0",
+    "viem": "^2.45.0",
+    "wagmi": "^3.4.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
