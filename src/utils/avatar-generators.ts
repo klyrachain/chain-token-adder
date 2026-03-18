@@ -61,20 +61,20 @@ export const generateAvatarUrl = async (seed: string, size = 64): Promise<string
       const isValid = await testImageUrl(url);
       
       if (isValid) {
-        console.log(`Successfully loaded avatar from ${generator.name}:`, url);
+        // console.log(`Successfully loaded avatar from ${generator.name}:`, url);
         return url;
       } else {
-        console.warn(`Failed to load avatar from ${generator.name}, trying next...`);
+        // console.warn(`Failed to load avatar from ${generator.name}, trying next...`);
         continue;
       }
     } catch (error) {
-      console.warn(`Error with ${generator.name}:`, error);
+      // console.warn(`Error with ${generator.name}:`, error);
       continue;
     }
   }
 
   // If all generators fail, return a simple colored SVG
-  console.warn('All avatar generators failed, using fallback SVG');
+  // console.warn('All avatar generators failed, using fallback SVG');
   const colors = ['FF6B6B', '4ECDC4', '45B7D1', '96CEB4', 'FFEAA7', 'DDA0DD', '98D8C8'];
   const randomColor = colors[seed.charCodeAt(0) % colors.length];
   
@@ -99,7 +99,7 @@ export const handleImageError = async (
     const fallbackUrl = await generateAvatarUrl(fallbackSeed, size);
     target.src = fallbackUrl;
   } catch (error) {
-    console.error('Failed to generate fallback avatar:', error);
+    // console.error('Failed to generate fallback avatar:', error);
     // Set a simple colored circle as ultimate fallback
     const colors = ['FF6B6B', '4ECDC4', '45B7D1', '96CEB4'];
     const randomColor = colors[fallbackSeed.charCodeAt(0) % colors.length];

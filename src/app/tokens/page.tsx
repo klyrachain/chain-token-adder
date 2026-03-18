@@ -206,7 +206,7 @@ export default function TokensPage() {
 
       const result = await walletClient.request({
         method: 'wallet_watchAsset',
-        params: [watchAssetParams],
+        params: watchAssetParams as any,
       });
 
       if (result) {
@@ -535,7 +535,7 @@ export default function TokensPage() {
                         </p>
                       </div>
                       <div className="mt-2">
-                        <p className="text-gray-500 text-xs font-mono mb-2">
+                        <p className="text-gray-300 text-xs font-mono mb-2 break-all">
                           {token.address}
                         </p>
                         <button

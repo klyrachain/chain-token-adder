@@ -61,17 +61,17 @@ export function ChainAdder() {
       }
       
       const data = await response.json();
-      console.log('Chains data from backend:', data);
+      // console.log('Chains data from backend:', data);
       
       // Log a sample chain to see the structure
       if (data && data.length > 0) {
-        console.log('Sample chain structure:', data[0]);
+        // console.log('Sample chain structure:', data[0]);
       }
       
       setChains(data || []);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch chains');
-      console.error('Error fetching chains:', err);
+      // console.error('Error fetching chains:', err);
     } finally {
       setLoading(false);
     }
@@ -135,36 +135,40 @@ export function ChainAdder() {
         blockExplorerUrls = [chain.explorer.url];
       }
 
-      // Fetch native currency from tokens API
-      let nativeCurrency = {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      };
+      // Fetch native currency from tokens API - MUST get from backend
+      let nativeCurrency: { name: string; symbol: string; decimals: number } | null = null;
 
       try {
         const tokensResponse = await fetch(`/api/tokens?chainId=${chain.chainId}`);
         if (tokensResponse.ok) {
-          const tokens = await tokensResponse.json();
-          // Find the native token (address with all e's)
-          const nativeToken = tokens.find((token: any) => 
+          const allTokens = await tokensResponse.json();
+          // Filter tokens for THIS specific chain only
+          const chainTokens = allTokens.filter((token: any) => 
+            String(token.chainId) === String(chain.chainId)
+          );
+          // Find the native token from this chain's tokens only
+          const nativeToken = chainTokens.find((token: any) => 
             token.address === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
           );
           if (nativeToken) {
             nativeCurrency = {
               name: nativeToken.name || chain.networkName,
-              symbol: nativeToken.symbol || 'ETH',
+              symbol: nativeToken.symbol,
               decimals: nativeToken.decimals || 18,
             };
           }
         }
       } catch (tokenError) {
-        console.warn('Could not fetch native token info:', tokenError);
-        // Continue with default ETH values
+        // console.warn('Could not fetch native token info:', tokenError);
       }
 
-      console.log('Using RPC URLs:', rpcUrls);
-      console.log('Using native currency:', nativeCurrency);
+      // If we couldn't get native currency from API, throw error
+      if (!nativeCurrency) {
+        throw new Error(`Could not fetch native currency for ${chain.networkName}. Please try again.`);
+      }
+
+      // console.log('Using RPC URLs:', rpcUrls);
+      // console.log('Using native currency:', nativeCurrency);
 
       // First try to switch to the chain
       try {
@@ -202,7 +206,7 @@ export function ChainAdder() {
         }
       }
     } catch (err: any) {
-      console.error('Error adding chain:', err);
+      // console.error('Error adding chain:', err);
       setSuccessModal({
         isOpen: true,
         title: "Failed to Add Chain",

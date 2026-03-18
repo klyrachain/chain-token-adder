@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
       backendUrl += `?${queryParams.toString()}`;
     }
 
-    console.log('Fetching tokens from backend:', backendUrl);
+    // console.log('Fetching tokens from backend:', backendUrl);
 
     const response = await fetch(backendUrl, {
       method: 'GET',
@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Backend API error:', response.status, errorText);
+      // console.error('Backend API error:', response.status, errorText);
       return NextResponse.json(
         { success: false, error: `Backend API error: ${response.status}` },
         { status: response.status }
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(data);
 
   } catch (error) {
-    console.error('Error fetching tokens:', error);
+    // console.error('Error fetching tokens:', error);
     return NextResponse.json(
       { success: false, error: 'Failed to fetch tokens' },
       { status: 500 }

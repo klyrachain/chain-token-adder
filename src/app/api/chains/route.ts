@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
       backendUrl += `?${queryParams.toString()}`;
     }
 
-    console.log('Fetching chains from backend:', backendUrl);
+    // console.log('Fetching chains from backend:', backendUrl);
 
     const response = await fetch(backendUrl, {
       method: 'GET',
