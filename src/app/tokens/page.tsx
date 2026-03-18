@@ -206,7 +206,7 @@ export default function TokensPage() {
 
       const result = await walletClient.request({
         method: 'wallet_watchAsset',
-        params: watchAssetParams,
+        params: [watchAssetParams],
       });
 
       if (result) {

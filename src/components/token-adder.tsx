@@ -63,13 +63,11 @@ export function TokenAdder() {
       const data = await response.json();
       setChains(data || []);
       
-      // Auto-select first chain if available
       if (data && data.length > 0 && !selectedChain) {
         setSelectedChain(data[0].chainId);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch chains');
-      console.error('Error fetching chains:', err);
     } finally {
       setLoading(false);
     }
@@ -107,7 +105,7 @@ export function TokenAdder() {
   };
 
   const handleAddToken = async (token: Token) => {
-    if (!isConnected || !walletProvider) {
+    if (!isConnected || !window.ethereum) {
       alert('Please connect your wallet first');
       return;
     }
@@ -127,12 +125,12 @@ export function TokenAdder() {
       };
 
       // Add chainId if different from current chain
-      const currentChainId = await walletProvider.request({ method: 'eth_chainId' });
+      const currentChainId = await window.ethereum.request({ method: 'eth_chainId' });
       if (token.chainId !== currentChainId) {
         watchAssetParams.options.chainId = parseInt(token.chainId);
       }
 
-      const result = await walletProvider.request({
+      const result = await window.ethereum.request({
         method: 'wallet_watchAsset',
         params: watchAssetParams,
       });

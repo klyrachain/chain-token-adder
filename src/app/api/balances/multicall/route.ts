@@ -126,7 +126,7 @@ export async function GET(request: Request) {
         allowFailure: true,
       });
 
-      multicallResult.forEach((r, i) => {
+      multicallResult.forEach((r: any, i) => {
         const token = tokensOnChain[i];
         if (!token) return;
         if (r.status === "success" && r.result != null) {

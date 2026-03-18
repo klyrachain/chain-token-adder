@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useAppKit, useAppKitAccount } from "@reown/appkit/react";
+import { useAppKitAccount } from "@reown/appkit/react";
 import { SuccessModal } from "@/components/success-modal";
 
 interface Chain {
@@ -37,7 +37,6 @@ export function ChainAdder() {
   const [searchQuery, setSearchQuery] = useState("");
   
   const { isConnected } = useAppKitAccount();
-  const { appKit } = useAppKit();
 
   useEffect(() => {
     fetchChains();
